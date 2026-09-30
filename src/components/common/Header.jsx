@@ -1,6 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 export default function Header() {
+  const count = useSelector((state) => state.counter.value);
+
   return (
     <div>
       <nav className="fixed top-0 left-0 z-50 w-full border-b bg-white">
@@ -268,12 +272,16 @@ export default function Header() {
               </li>
 
               <li>
-                <Link
-                  to={"/cart"}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-                >
-                  Cart (0)
-                </Link>
+                {count === 0 ? (
+                  <p>cart is empty</p>
+                ) : (
+                  <Link
+                    to={"/cart"}
+                    className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  >
+                    Cart ({count})
+                  </Link>
+                )}
               </li>
             </ul>
           </div>
