@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"; 
 
 const initialState ={ 
-     employeeData : [],
+     employeeData : [  
+      { id: 1, name: "Rahul Sharma" ,  status : true },
+      { id: 2, name: "Amit Verma"  ,  status : true },
+      { id: 3, name: "Priya Patel" ,  status : true },
+     ],
 };  
 
 
