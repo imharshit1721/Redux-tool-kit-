@@ -1,7 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteEmployee,
+  toggleEmployeeStatus,
+} from "../../../features/Employee/employeeSlice";
 
 export default function Employee() {
   const EmployeeData = useSelector((state) => state.employee.employeeData);
+  const dispatch = useDispatch();
   console.log("employee data", EmployeeData);
   return (
     <div className="border border-gray-500 rounded-[10px] m-2">
@@ -14,9 +19,11 @@ export default function Employee() {
           return (
             <List
               key={element.id}
+              id={element.id}
               name={element.name}
               status={element.status}
               department={element.department}
+              dispatch={dispatch}
             />
           );
         })}
@@ -25,7 +32,7 @@ export default function Employee() {
   );
 }
 
-const List = ({ name, status, department }) => {
+const List = ({ id, name, status, department, dispatch }) => {
   const initial = name
     .split(" ")
     .map((word) => word[0])
@@ -46,16 +53,25 @@ const List = ({ name, status, department }) => {
 
         <div className="flex gap-2">
           {status ? (
-            <button className="bg-[#D7F1E1] rounded-2xl  py-1  px-2 text-[#669879]">
+            <button
+              onClick={() => dispatch(toggleEmployeeStatus())}
+              className="cursor-pointer bg-[#D7F1E1] rounded-2xl  py-1  px-2 text-[#669879]"
+            >
               Active{" "}
             </button>
           ) : (
-            <button className="bg-[#E9E9E7] rounded-2xl py-1 px-2 text-black">
+            <button
+              onClick={() => dispatch(toggleEmployeeStatus())}
+              className="cursor-pointer bg-[#E9E9E7] rounded-2xl py-1 px-2 text-black"
+            >
               Inactive{" "}
             </button>
           )}
 
-          <button className="py-2 px-3 rounded-2xl text-[#E9E9E7] border border-[#E9E9E7] ">
+          <button
+            onClick={() => dispatch(deleteEmployee(id))}
+            className="py-2 px-3 rounded-2xl text-[#E9E9E7] border border-[#E9E9E7] cursor-pointer "
+          >
             Delete
           </button>
         </div>
